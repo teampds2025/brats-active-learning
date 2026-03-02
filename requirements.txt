@@ -1,0 +1,23 @@
+# medical data and arrays
+nibabel==5.3.3
+numpy==2.3.5
+pandas==2.3.3
+
+# deep learning
+scikit-learn==1.7.2
+scipy==1.16.3
+torch==2.4.1
+torch-directml==0.2.5.dev240914
+torchvision==0.19.1
+
+# image processing 
+albucore==0.0.24
+albumentations==2.0.8
+opencv-python-headless==4.13.0.92
+
+# visualization
+matplotlib==3.10.7
+
+# utilities and environment
+notebook==7.5.0
+tqdm==4.67.1
