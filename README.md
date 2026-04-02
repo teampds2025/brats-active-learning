@@ -13,9 +13,19 @@ The project simulates a real-world scenario where ground-truth labels are expens
 ## Research Summary
 Key technical features include:
 *   **2.5D Pseudo-3D Approach:** Stacking sequential MRI slices (z-1, z, z+1) into a 12-channel input to provide the model with 3D spatial context without the massive RAM overhead of full 3D convolutions.
-*   **Dynamic ROI Extraction:** Implementing a "Smart Crop" algorithm that locates the geometric center of the brain tissue to safely crop volumes to `192x192`, preventing the accidental amputation of off-center anatomy while significantly speeding up training.
-*   **Agile U-Net & MC Dropout:** A lightweight U-Net architecture integrated with Monte Carlo Dropout at the bottleneck. By keeping dropout active during inference, the pipeline generates pixel-wise variance maps to effectively estimate the model's epistemic uncertainty.
-*   **Robust Optimization:** Patient-specific Z-Score normalization and a custom multi-class Dice Loss module specifically engineered to handle severe voxel class imbalances. 
+*   **Dynamic ROI Extraction:** A "Smart Crop" algorithm that locates the geometric center of the brain tissue to safely crop volumes to `192x192`, preventing accidental amputation of off-center anatomy while significantly speeding up training.
+*   **Agile U-Net & BALD Uncertainty:** A lightweight U-Net with Monte Carlo Dropout at the bottleneck. By keeping dropout active during inference and computing BALD (Bayesian Active Learning by Disagreement), the pipeline isolates epistemic uncertainty to score and rank unlabeled patients.
+*   **Active Learning Loop:** Three iterations of scan → select → retrain, each adding the 10 most uncertain patients to the labeled set. Independent pools and a pre-fixed random baseline ensure a clean comparison between intelligent and random selection strategies.
+*   **Robust Optimization:** Patient-specific Z-Score normalization and a custom multi-class Dice Loss module engineered to handle severe voxel class imbalances.
+
+## Repository Structure
+```
+├── notebooks/          # full pipeline notebooks 
+├── artifacts/          # saved model checkpoints
+├── docs/               # experiment logs 
+├── requirements.txt
+└── README.md
+```
 
 ## Technology Stack
 Language: Python 3.11.9. Key Libraries:
